@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
-  <script type="text/javascript" src="../unityInstanceHandler.js"></script>
+   <script type="text/javascript" src="../unityInstanceHandler.js"></script>
   <body>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600></canvas>
@@ -28,11 +28,11 @@
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/build.loader.js";
+      var loaderUrl = buildUrl + "/webgl.loader.js";
       var config = {
-        dataUrl: buildUrl + "/build.data.unityweb",
-        frameworkUrl: buildUrl + "/build.framework.js.unityweb",
-        codeUrl: buildUrl + "/build.wasm.unityweb",
+        dataUrl: buildUrl + "/webgl.data.unityweb",
+        frameworkUrl: buildUrl + "/webgl.framework.js.unityweb",
+        codeUrl: buildUrl + "/webgl.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "VirtualFTC",
         productName: "Robot Simulator",
@@ -62,9 +62,22 @@
         setTimeout(() => {
           mobileWarning.style.display = "none";
         }, 5000);
-      } else {
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
+      }
+      else {
+      document.querySelector("#unity-footer").style.display = "none";
+
+      const resizeCanvas = () => {
+        const fieldView = parent.document.querySelector('#fieldView');
+
+		canvas.style.width = `${fieldView.offsetWidth}px`;
+		canvas.style.height = `${fieldView.offsetHeight}px`;
+      }
+
+      resizeCanvas();
+
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+      })
       }
       loadingBar.style.display = "block";
 
@@ -85,32 +98,32 @@
         });
       };
       document.body.appendChild(script);
-      var frontLeftEncoder = 0;
-      var frontRightEncoder = 0;
-      var backLeftEncoder = 0;
-      var backRightEncoder = 0;
+       var frontLeftEncoder = 0;
+       var frontRightEncoder = 0;
+       var backLeftEncoder = 0;
+       var backRightEncoder = 0;
 
-      function setFrontLeftEncoders(encoders) {
-        frontLeftEncoder = encoders;
-        updateEncoderLocalStorage();
-      }
-      function setFrontRightEncoders(encoders) {
-        frontRightEncoder = encoders;
-        updateEncoderLocalStorage();
-      }
-      function setBackLeftEncoders(encoders) {
-        backLeftEncoder = encoders;
-        updateEncoderLocalStorage();
-      }
-      function setBackRightEncoders(encoders) {
-        backRightEncoder = encoders;
-        updateEncoderLocalStorage();
-      }
+       function setFrontLeftEncoders(encoders) {
+         frontLeftEncoder = encoders;
+         updateEncoderLocalStorage();
+       }
+       function setFrontRightEncoders(encoders) {
+         frontRightEncoder = encoders;
+         updateEncoderLocalStorage();
+       }
+       function setBackLeftEncoders(encoders) {
+         backLeftEncoder = encoders;
+         updateEncoderLocalStorage();
+       }
+       function setBackRightEncoders(encoders) {
+         backRightEncoder = encoders;
+         updateEncoderLocalStorage();
+       }
 
-      function updateEncoderLocalStorage() {
-      var motorPositions = "[" + frontLeftEncoder + ", " + frontRightEncoder + ", " + backLeftEncoder + ", " + backRightEncoder + ", 0, 0, 0, 0]";
-        localStorage.setItem('motorCurrentPositions', motorPositions);
-      }
+       function updateEncoderLocalStorage() {
+       var motorPositions = "[" + frontLeftEncoder + ", " + frontRightEncoder + ", " + backLeftEncoder + ", " + backRightEncoder + ", 0, 0, 0, 0]";
+         localStorage.setItem('motorCurrentPositions', motorPositions);
+       }
     </script>
   </body>
 </html>
